@@ -1,0 +1,5 @@
+date, day_part, air_temp, air_humidty, soil_moisture, watering_24h, watering_2d, watering_in_3d, watering_in_1w, start_time_min, duration
+2025-12-1, 'morning', 20, 30, 30, 0, 30, 60, 100, 20, 40
+2025-12-1, 'noon', 20, 30, 30, 0, 30, 60, 100, 0, 0
+2025-12-1, 'evening', 20, 30, 30, 0, 30, 60, 100, 0, 0
+2025-12-1, 'night', 20, 30, 30, 0, 30, 60, 100, 0, 0
