@@ -3,14 +3,15 @@ from relay import control_relay
 from temprature import mesure_humidity_and_temp
 from soil import measure_moisture
 from water_level import is_water_at_bottom
-from config import TOKEN
+from config import TOKEN, ALLOWED_USERS, DEBUG
+
 
 BASE_URL = f"https://api.telegram.org/bot{TOKEN}"
 proxies = {
     "http": "socks5h://127.0.0.1:1080",
     "https": "socks5h://127.0.0.1:1080"
 }
-
+proxies = None
 s1, s2, s3, s4 = 0, 0, 0, 0 # Rele states
 
 
@@ -29,15 +30,18 @@ def send_message(chat_id, text, reply_markup=None):
     if reply_markup:
         data["reply_markup"] = reply_markup
     response = requests.post(f"{BASE_URL}/sendMessage", json=data, proxies = proxies)
-    if response.status_code != 200:
+    if response.status_code != 200 and DEBUG:
         print("Failed to send message:", response.text)
 
 def handle_message(message):
     global s1, s2
     chat_id = message["chat"]["id"]
+    if chat_id not in ALLOWED_USERS:
+        return
+    
     text : str = message.get("text", "")
-
-    print(f"Received message from {chat_id}: {text}")  # Debug
+    if DEBUG:
+        print(f"Received message from {chat_id}: {text}")  # Debug
 
     if text.startswith("/start"):
         send_message(chat_id, "Welcome! Choose an option:", reply_markup=keyboard())
