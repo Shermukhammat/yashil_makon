@@ -41,39 +41,42 @@ def handle_message(message):
     if text.startswith("/start"):
         send_message(chat_id, "Welcome! Choose an option:", reply_markup=keyboard())
 
-    elif text in ["🟢 rele 1", "🔴 rele 1"]:
-        if s1:
-            control_relay(11, 0)
-            s1 = 0
-            send_message(chat_id, "Rele 1 o'chirildi", reply_markup=keyboard())
-        else:
-            control_relay(11, 1)
-            s1 = 1
-            send_message(chat_id, "Rele 1 yoqildi", reply_markup=keyboard())
+    elif text == "🟢 rele 1" and s1 == 1:
+        control_relay(11, 0)
+        s1 = 0
+        send_message(chat_id, "Rele 1 o'chirildi", reply_markup=keyboard())
+    elif text == "🔴 rele 1" and s1 == 0:
+        control_relay(11, 1)
+        s1 = 1
+        send_message(chat_id, "Rele 1 yoqildi", reply_markup=keyboard())
 
-    elif text in ["🟢 rele 2", "🔴 rele 2"]:
-        if s2:
-            control_relay(13, 0)
-            s2 = 0
-            send_message(chat_id, "Rele 2 o'chirildi", reply_markup=keyboard())
-        else:
-            control_relay(13, 1)
-            s2 = 1
-            send_message(chat_id, "Rele 2 yoqildi", reply_markup=keyboard())
+    elif text == "🟢 rele 2" and s2 == 1:
+        control_relay(13, 0)
+        s2 = 0
+        send_message(chat_id, "Rele 2 o'chirildi", reply_markup=keyboard())
 
+    elif text == "🔴 rele 2" and s2 == 0:
+        control_relay(13, 1)
+        s2 = 1
+        send_message(chat_id, "Rele 2 yoqildi", reply_markup=keyboard())
+    
     elif text == "Havo harorati":
         humidity, temperature = mesure_humidity_and_temp()
-        send_message(chat_id, f"🌡 Harorat: {temperature:.1f}°C   \n💧 Namlik: {humidity:.1f}%")
+        send_message(chat_id, f"🌡 Harorat: {temperature:.1f}°C   \n💧 Namlik: {humidity:.1f}%", reply_markup=keyboard())
 
     elif text == "Tuproq namligi":
         moisture, norm, raw, voltage = measure_moisture()
-        send_message(chat_id, f"Namlik: {moisture}%  \nNormalized: {norm}  \nRaw: {raw}  \nVolt: {voltage:.4f}")
+        send_message(chat_id, f"Namlik: {moisture}%  \nNormalized: {norm}  \nRaw: {raw}  \nVolt: {voltage:.4f}", 
+                     reply_markup=keyboard())
 
     elif text == "Suv sathi":
         if is_water_at_bottom():
-            send_message(chat_id, "Suv bor")
+            send_message(chat_id, "Suv bor",
+                         reply_markup=keyboard())
         else:
-            send_message(chat_id, "Suv yo'q")
+            send_message(chat_id, "Suv yo'q", 
+                         reply_markup=keyboard())
+    
 
 
 def main():
@@ -103,9 +106,6 @@ def main():
 
         except Exception as e:
             print("Error:", e)
-
-        time.sleep(1)
-
 
 if __name__ == "__main__":
     main()
