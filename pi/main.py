@@ -3,15 +3,10 @@ from relay import control_relay
 from temprature import mesure_humidity_and_temp
 from soil import measure_moisture
 from water_level import is_water_at_bottom
-from config import TOKEN, ALLOWED_USERS, DEBUG
+from config import TOKEN, ALLOWED_USERS, DEBUG, proxies
 
 
 BASE_URL = f"https://api.telegram.org/bot{TOKEN}"
-proxies = {
-    "http": "socks5h://127.0.0.1:1080",
-    "https": "socks5h://127.0.0.1:1080"
-}
-proxies = None
 s1, s2, s3, s4 = 0, 0, 0, 0 # Rele states
 
 
