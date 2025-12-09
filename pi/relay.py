@@ -41,3 +41,7 @@ if __name__ == "__main__":
         sys.exit()
 
     control_relay(pin, state)
+
+else:
+    for pin in RELAY_PINS:
+        control_relay(pin, 0)
